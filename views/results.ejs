@@ -1,0 +1,26 @@
+<%- include('partials/header1') %>
+<%- include('partials/header2') %>
+<%- include('partials/navbar') %>
+<div class="container">
+    <h1 class="display-1 text-center">Property Evaluation Results</h1>
+    <div class="row">
+        <div class="display-5 text-center text-muted mb-5">Properties Evaluated: <%= propertyLength %> </div>
+    </div>
+    <% for (let property of properties) { %>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="card mt-3" style="width: 100%;">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="/properties/<%=property._id%> "><%= property.address %></a></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><%= property.city %>, <%= property.state %> </h6>
+                    <h6 class="card-subtitle mb-2">Price:
+                        $<%= property.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%> </h6>
+                    <h6 class="card-subtitle mb-2">Estimated Rent:
+                        $<%= property.rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %> </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>
+<%- include('partials/footer') %>
