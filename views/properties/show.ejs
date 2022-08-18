@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="col-12 mt-5 text-center">
+    <% if (property.image) {%>
+    <img src="<%= property.image %> " alt="Image of <%= property.address %>" class="img-fluid">
+    <% } else {%>
+    <img src="https://res.cloudinary.com/davatxx2f/image/upload/v1659678902/PropertyThing/quack_ih1amy.jpg" alt=""
+        class="img-fluid">
+    <% } %>
+</div>
+
+<div class="container text-center">
+    <div class="row justify-content-start mt-2">
+        <div class="col-sm-12 col-md-4 col-lg-4 mb-2">
+            <h1><%= property.address %></h1>
+            <h2><%= property.city %>, <%= property.state %> </h2>
+            <p class="fs-4">Beds: <%= property.beds %> Baths: <%= property.baths %></p>
+            <p class="fs-5">Square Feet: <%= property.sqFt %> Year Built: <%= property.yearBuilt %></p>
+            <div>
+                <a class="card-link btn btn-info" href="/properties/<%= property._id %>/edit">Edit</a>
+                <form class="d-inline" action="/properties/<%= property._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4 ms-auto">
+            <h2>Evaluations</h2>
+            <div class="row justify-content-center mb-2">
+                <% for(let evaluation of property.evaluations) {%>
+                <div class="card" style="width: 14rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Purchase Price:
+                            $<%= evaluation.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Down Payment:
+                            <%= (evaluation.downPaymentPercent*100)%>%</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Cash Flow:
+                            $<%= evaluation.cashFlow.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %></h6>
+                        <a href="/evaluations/<%= evaluation._id %>" class="card-link">More Details</a>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            <a class="card-link btn btn-info" href="/properties/<%= property._id %>/evaluations/new">New Eval</a>
+        </div>
+    </div>
+</div>

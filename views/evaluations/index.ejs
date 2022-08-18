@@ -1,0 +1,31 @@
+<% layout('layouts/boilerplate') %>
+<h1 class="text-center">All Evaluations</h1>
+<% for (let evaluation of evaluations) {%>
+<div class="col-6 offset-3">
+    <div class="card mb-3" style="max-width: 600px;">
+        <div class="row g-0">
+            <div class="col-md-7">
+                <div class="card-body align-items-center justify-content-center">
+                    <h5 class="card-title"><%= evaluation.property.address %></h5>
+                    <p class=" text-muted fs-5"><%= evaluation.property.city %>, <%= evaluation.property.state %></p>
+                    <p class="card-text mb-0 pt-2">Purchase Price: $
+                        <%= evaluation.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %></p>
+                    <p class="card-text mb-0">Down Payment:
+                        <%= evaluation.downPaymentPercent %>%</p>
+                    <p class="card-text mb-0">Cash Flow: $<%= evaluation.cashFlow %></p>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <% if(!evaluation.property.image)  {%>
+                <a href="/evaluations/<%= evaluation._id%>"><img
+                        src="https://res.cloudinary.com/davatxx2f/image/upload/v1659678902/PropertyThing/quack_ih1amy.jpg"
+                        class="img-fluid rounded-start" alt="Image of <%= evaluation.property.address %>"> </a>
+                <% } else {%>
+                <a href="/evaluations/<%= evaluation._id%>"><img src="<%= evaluation.property.image %>"
+                        class="img-thumbnail rounded-start" alt="Image of <%= evaluation.property.address %> "> </a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>

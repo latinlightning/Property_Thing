@@ -1,60 +1,26 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const Schema = mongoose.Schema;
 
 const PropertySchema = new Schema({
-    beds: {
-        type: Number,
-    },
-    baths: {
-        type: Number,
-    },
-    squareFootage: {
-        type: Number,
-    },
-    type: {
+    address: String,
+    city: String,
+    state: String,
+    zip: Number,
+    type: String,
+    beds: Number,
+    baths: Number,
+    sqFt: Number,
+    yearBuilt: Number,
+    image: {
         type: String,
+        default: 'https://res.cloudinary.com/davatxx2f/image/upload/v1659678902/PropertyThing/quack_ih1amy.jpg'
     },
-    address: {
-        type: String,
-        required: true
-    },
-    city: {
-        type: String,
-        required: true
-    },
-    state: {
-        type: String,
-        required: true,
-        minlength: 2,
-        maxlength: 2
-    },
-    zipcode: {
-        type: Number,
-        required: true,
-    },
-    price: {
-        type: String,
-        required: true
-    },
-    rent: {
-        type: Number,
-        required: true
-    },
-    expenses: {
-        taxes: {
-            type: Number
-        },
-        insurance: {
-            type: Number
-        },
-        hoa: {
-            type: Number
-        },
-        propertyManager: {
-            type: Number
+    evaluations: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Evaluation'
         }
-    }
-});
+    ]
+}, { timestamps: true });
 
-const Property = mongoose.model('Property', PropertySchema);
-module.exports = Property;
+module.exports = mongoose.model('Property', PropertySchema);
