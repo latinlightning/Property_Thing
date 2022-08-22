@@ -31,7 +31,7 @@
                         <h5 class="card-title">Purchase Price:
                             $<%= evaluation.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %></h5>
                         <h6 class="card-subtitle mb-2 text-muted">Down Payment:
-                            <%= evaluation.downPaymentPercent*100%>%</h6>
+                            <%= evaluation.downPaymentPercent.toFixed(4)*100%>%</h6>
                         <h6 class="card-subtitle mb-2 text-muted">Cash Flow:
                             $<%= evaluation.cashFlow.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %></h6>
                         <a href="/evaluations/<%= evaluation._id %>" class="card-link">More Details</a>
@@ -43,6 +43,106 @@
         </div>
     </div>
 </div>
-<div class="container col-8">
-    <canvas id="myChart" width="400" height="400"></canvas>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-12  col-lg-6 mt-3 mb-5">
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+        <div class="col-sm-12 col-lg-6">
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                        <button class="accordion-button fs-4 fw-semibold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                            aria-controls="panelsStayOpen-collapseOne">
+                            Income -
+                            $<%= evaluation.totalIncome.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                        aria-labelledby="panelsStayOpen-headingOne">
+                        <div class="accordion-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Monthly Rent:
+                                    $<%= evaluation.rent %> </li>
+                                <li class="list-group-item">Utilities Fee:
+                                    $<%= evaluation.utilities.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %> </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button collapsed fs-4 fw-semibold" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                            aria-controls="panelsStayOpen-collapseTwo">
+                            Expenses -
+                            $<%= evaluation.totalExpenses.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                        aria-labelledby="panelsStayOpen-headingTwo">
+                        <div class="accordion-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Property Insurance: $<%= evaluation.insurance %> </li>
+                                <li class="list-group-item">HOA: $<%= evaluation.hoa %> </li>
+                                <li class="list-group-item">Maintenance: $<%= evaluation.maintenance %> </li>
+                                <li class="list-group-item">Taxes: $<%= evaluation.taxes %> </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                        <button class="accordion-button collapsed fs-4 fw-semibold" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree"
+                            aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            Metrics
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                        aria-labelledby="panelsStayOpen-headingThree">
+                        <div class="accordion-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Gross Rent Multiplier: <%= evaluation.grm %>% </li>
+                                <li class="list-group-item">Cash Flow:
+                                    $<%= evaluation.cashFlow.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col-12">
+            <table class="table table-striped-columns">
+                <thead>
+                    <tr>
+                        <th scope="col">Year</th>
+                        <th scope="col">Home Price</th>
+                        <th scope="col">Remaining Debt</th>
+                        <th scope="col">Equity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i = 0; i < evaluation.length-1; i++) {%>
+                    <% let yearly = []; for (let i = 0; i < evaluation.remainingBalance.length; i += 12) {
+                            yearly.push(evaluation.remainingBalance[i])
+                        }; %>
+                    <tr>
+                        <th scope="row"> <%= i + 1 %> </th>
+                        <td> $<%= evaluation.homeValues[i].toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %>
+                        </td>
+                        <td> $<%= parseFloat(yearly[i]).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %>
+                        </td>
+                        <td> $<%= evaluation.equityValues[i].toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

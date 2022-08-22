@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const EvaluationSchema = new Schema({
     price: Number,
     closingCosts: Number,
-    isFinanced: Boolean,
     downPayment: Number,
     downPaymentPercent: Number,
     rate: Number,

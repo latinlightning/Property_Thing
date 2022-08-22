@@ -20,7 +20,6 @@ module.exports.evaluationSchema = Joi.object({
     evaluation: Joi.object({
         price: Joi.number().required().min(0),
         closingCosts: Joi.number().min(0),
-        isFinanced: Joi.boolean().required(),
         downPayment: Joi.number(),
         downPaymentPercent: Joi.number(),
         rate: Joi.number(),

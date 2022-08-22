@@ -14,30 +14,17 @@
                                 placeholder="$100,000" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="isFinanced">Is Financed: </label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="evaluation[isFinanced]"
-                                    id="isFinanced1" value="true" onclick="noLoan()">
-                                <label class="form-check-label" for="isFinanced1">Yes</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="evaluation[isFinanced]"
-                                    id="isFinanced2" value="false" required>
-                                <label class="form-check-label" for="isFinanced2">No</label>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="downPayment">Down Payment</label>
+                            <label class="form-label" for="downPayment">Down Payment (0 if No Loan)</label>
                             <input class="form-control" type="number" name="evaluation[downPayment]"
                                 placeholder="$20,000" id="downPayment">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="rate">Interest Rate</label>
+                            <label class="form-label" for="rate">Interest Rate (0 if No Loan)</label>
                             <input class="form-control" type="number" name="evaluation[rate]" id="rate"
                                 placeholder="3.5%" step="0.01">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="length">Length of Loan in Years</label>
+                            <label class="form-label" for="length">Length of Loan in Years (0 if No Loan)</label>
                             <input class="form-control" type="number" name="evaluation[length]" id="length"
                                 placeholder="30">
                         </div>

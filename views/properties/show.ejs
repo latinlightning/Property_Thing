@@ -10,7 +10,7 @@
 </div>
 
 <div class="container text-center">
-    <div class="row justify-content-start mt-2">
+    <div class="row mt-2 justify-content-around">
         <div class="col-sm-12 col-md-4 col-lg-4 mb-2">
             <h1><%= property.address %></h1>
             <h2><%= property.city %>, <%= property.state %> </h2>
@@ -23,24 +23,28 @@
                 </form>
             </div>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-4 ms-auto">
+        <div class="col-sm-12 col-md-4 col-lg-8 mb-2" align="center">
             <h2>Evaluations</h2>
-            <div class="row justify-content-center mb-2">
+            <div class="d-flex flex-row">
                 <% for(let evaluation of property.evaluations) {%>
-                <div class="card" style="width: 14rem;">
+                <div class="card mx-1" style="width: 14rem;">
                     <div class="card-body">
                         <h5 class="card-title">Purchase Price:
                             $<%= evaluation.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %></h5>
+                        <% if (evaluation.downPayment !== 0) {%>
                         <h6 class="card-subtitle mb-2 text-muted">Down Payment:
-                            <%= (evaluation.downPaymentPercent*100)%>%</h6>
+                            <%= parseFloat(evaluation.downPaymentPercent*100).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%>%
+                        </h6>
+                        <% } %>
                         <h6 class="card-subtitle mb-2 text-muted">Cash Flow:
-                            $<%= evaluation.cashFlow.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %></h6>
+                            $<%= parseFloat(evaluation.cashFlow).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %>
+                        </h6>
                         <a href="/evaluations/<%= evaluation._id %>" class="card-link">More Details</a>
                     </div>
                 </div>
                 <% } %>
             </div>
-            <a class="card-link btn btn-info" href="/properties/<%= property._id %>/evaluations/new">New Eval</a>
+            <a class="card-link btn btn-info mt-2" href="/properties/<%= property._id %>/evaluations/new">New Eval</a>
         </div>
     </div>
 </div>
