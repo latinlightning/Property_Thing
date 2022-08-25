@@ -16,6 +16,7 @@
 <body class="d-flex flex-column vh-100">
     <%- include('../partials/navbar')%>
     <main class="container">
+        <%- include('../partials/flash')%>
         <%- body %>
     </main>
     <script src=" https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
@@ -24,33 +25,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
         integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
         crossorigin="anonymous"></script>
-    <script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (() => {
-            'use strict'
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.validated-form')
-
-            // Loop over them and prevent submission
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        })()
-    </script>
+    <script src="/validateForms.js"></script>
     <script type="text/javascript">
-        const totalEquityLabels = <%- JSON.stringify(evaluation.equityValues.length -1) %>;
+        const totalEquityLabels = <%- JSON.stringify(evaluation.equityValues.length - 1) %>;
         let labels1 = [];
 
         for (let i = 0; i < totalEquityLabels; i++) {
-            labels1.push(i+1);
+            labels1.push(i + 1);
         }
         const ctx = document.getElementById('myChart');
         const myChart = new Chart(ctx, {
@@ -62,7 +43,7 @@
                     data: <%- JSON.stringify(evaluation.equityValues) %>,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
-         
+
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',

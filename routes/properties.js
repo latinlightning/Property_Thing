@@ -57,11 +57,25 @@ router.get('/new', (req, res) => {
 router.post('/', validateProperty, catchAsync(async (req, res) => {
     const newProperty = new Property(req.body.property);
     await newProperty.save();
+    req.flash('success', 'Successfully Made Property')
     res.redirect(`/properties/${newProperty._id}`);
 }));
 
 router.get('/:id', catchAsync(async (req, res) => {
-    const property = await Property.findById(req.params.id).populate('evaluations');
+    let id_error = 0;
+    let property;
+
+    //Looks for id error if id error flashes that it cant find that property
+    try {
+        property = await Property.findById(req.params.id).populate('evaluations');
+    }
+    catch (err) {
+        if (err.kind === 'ObjectId') id_error = 1
+    }
+    if (!property || id_error == 1) {
+        req.flash('error', 'Cant find that property');
+        return res.redirect('/properties')
+    }
     let title = property.address;
     res.render('properties/show', { property, title });
 
@@ -77,12 +91,14 @@ router.get('/:id/edit', catchAsync(async (req, res) => {
 router.put('/:id', validateProperty, catchAsync(async (req, res) => {
     const { id } = req.params;
     const property = await Property.findByIdAndUpdate(id, { ...req.body.property });
+    req.flash('success', 'Successfully Updated Property')
     res.redirect(`/properties/${property._id}`);
 }));
 
 router.delete('/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
     await Property.findByIdAndDelete(id);
+    req.flash('success', 'Successfully Deleted Property');
     res.redirect('/properties');
 }));
 
@@ -122,6 +138,7 @@ router.post('/:id/evaluations', validateEvaluation, catchAsync(async (req, res) 
     property.evaluations.push(evaluation);
     await property.save();
     await evaluation.save();
+    req.flash('success', 'Successfully Made Evaluation')
     res.redirect(`/evaluations/${evaluation._id}`);
 }));
 
