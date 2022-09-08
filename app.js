@@ -6,13 +6,17 @@ const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
 
 //Error and Validation Imports
 const ExpressError = require('./utils/ExpressError');
 
 //Routes
-const properties = require('./routes/properties');
-const evaluations = require('./routes/evaluations');
+const userRoutes = require('./routes/users');
+const propertyRoutes = require('./routes/properties');
+const evaluationRoutes = require('./routes/evaluations');
 
 //Database Connection
 mongoose.connect('mongodb://localhost:27017/property_thing')
@@ -47,7 +51,15 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
@@ -57,8 +69,9 @@ app.get('/', (req, res) => {
     res.render('home')
 });
 
-app.use('/properties', properties);
-app.use('/evaluations', evaluations);
+app.use('/', userRoutes);
+app.use('/properties', propertyRoutes);
+app.use('/evaluations', evaluationRoutes);
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))

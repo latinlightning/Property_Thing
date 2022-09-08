@@ -4,6 +4,7 @@ const router = express.Router();
 const { propertySchema, evaluationSchema } = require('../joiSchemas.js')
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
+const { isLoggedIn } = require('../middleware')
 
 
 //Calculation Function Imports
@@ -49,12 +50,12 @@ router.get('/', catchAsync(async (req, res) => {
     res.render('properties/index', { properties, title });
 }));
 
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
     const title = 'Properties';
     res.render('properties/new', { title });
 });
 
-router.post('/', validateProperty, catchAsync(async (req, res) => {
+router.post('/', isLoggedIn, validateProperty, catchAsync(async (req, res) => {
     const newProperty = new Property(req.body.property);
     await newProperty.save();
     req.flash('success', 'Successfully Made Property')
@@ -81,21 +82,21 @@ router.get('/:id', catchAsync(async (req, res) => {
 
 }));
 
-router.get('/:id/edit', catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
     const property = await Property.findById(req.params.id);
     const title = 'Edit'
     res.render('properties/edit', { property, title });
 
 }));
 
-router.put('/:id', validateProperty, catchAsync(async (req, res) => {
+router.put('/:id', isLoggedIn, validateProperty, catchAsync(async (req, res) => {
     const { id } = req.params;
     const property = await Property.findByIdAndUpdate(id, { ...req.body.property });
     req.flash('success', 'Successfully Updated Property')
     res.redirect(`/properties/${property._id}`);
 }));
 
-router.delete('/:id', catchAsync(async (req, res) => {
+router.delete('/:id', isLoggedIn, catchAsync(async (req, res) => {
     const { id } = req.params;
     await Property.findByIdAndDelete(id);
     req.flash('success', 'Successfully Deleted Property');
