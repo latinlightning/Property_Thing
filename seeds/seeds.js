@@ -11,6 +11,7 @@ db.once('open', () => {
 
 const seedProperties = [
     {
+        author: '631a48c17a6f53114748613b',
         address: '808 Comet Dr Apt 203',
         city: 'Foster City',
         state: 'CA',
@@ -23,6 +24,7 @@ const seedProperties = [
         image: 'https://res.cloudinary.com/davatxx2f/image/upload/v1659676359/PropertyThing/kulakai_rundoh.webp'
     },
     {
+        author: '631a48c17a6f53114748613b',
         address: '505 Seagate Way',
         city: 'Belmont',
         state: 'CA',
@@ -35,6 +37,7 @@ const seedProperties = [
         image: 'https://res.cloudinary.com/davatxx2f/image/upload/v1659676323/PropertyThing/seagate_vsbpme.webp'
     },
     {
+        author: '631a48c17a6f53114748613b',
         address: '5255 Quay Court',
         city: 'Arvada',
         state: 'CO',
@@ -48,6 +51,7 @@ const seedProperties = [
 
     },
     {
+        author: '631a48c17a6f53114748613b',
         address: '8500 Lamar Dr',
         city: 'Arvada',
         state: 'CO',
@@ -69,4 +73,6 @@ const seedDb = async () => {
     }
 };
 
-seedDb();
+seedDb().then(() => {
+    mongoose.connection.close();
+});

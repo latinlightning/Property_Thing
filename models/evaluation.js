@@ -24,6 +24,10 @@ const EvaluationSchema = new Schema({
     totalExpenses: Number,
     capRate: Number,
     grm: Number,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     property: {
         type: Schema.Types.ObjectId,
         ref: 'Property'

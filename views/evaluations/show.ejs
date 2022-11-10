@@ -34,6 +34,8 @@
                             <%= evaluation.downPaymentPercent.toFixed(4)*100%>%</h6>
                         <h6 class="card-subtitle mb-2 text-muted">Cash Flow:
                             $<%= evaluation.cashFlow.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %></h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Submitted By: <%= evaluation.author.username %> </h6>
+
                         <a href="/evaluations/<%= evaluation._id %>" class="card-link">More Details</a>
                     </div>
                 </div>

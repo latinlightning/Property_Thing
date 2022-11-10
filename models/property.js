@@ -11,6 +11,10 @@ const PropertySchema = new Schema({
     baths: Number,
     sqFt: Number,
     yearBuilt: Number,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     image: {
         type: String,
         default: 'https://res.cloudinary.com/davatxx2f/image/upload/v1659678902/PropertyThing/quack_ih1amy.jpg'

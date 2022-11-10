@@ -16,12 +16,15 @@
             <h2><%= property.city %>, <%= property.state %> </h2>
             <p class="fs-4">Beds: <%= property.beds %> Baths: <%= property.baths %></p>
             <p class="fs-5">Square Feet: <%= property.sqFt %> Year Built: <%= property.yearBuilt %></p>
+            <p class="fs-5">Submitted By: <%= property.author.username %></p>
+            <% if (currentUser && property.author.equals(currentUser)) {%>
             <div>
                 <a class="card-link btn btn-info" href="/properties/<%= property._id %>/edit">Edit</a>
                 <form class="d-inline" action="/properties/<%= property._id %>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete</button>
                 </form>
             </div>
+            <% } %>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-8 mb-2" align="center">
             <h2>Evaluations</h2>

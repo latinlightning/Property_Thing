@@ -26,7 +26,7 @@ router.get('/', catchAsync(async (req, res) => {
 }));
 
 router.get('/:id', catchAsync(async (req, res) => {
-    const evaluation = await Evaluation.findById(req.params.id).populate('property');
+    const evaluation = await Evaluation.findById(req.params.id).populate('property').populate('author');
     const title = `Evaluation for ${evaluation.property.address}`;
     res.render('evaluations/show', { evaluation, title });
 }));
