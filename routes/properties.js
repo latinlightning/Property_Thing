@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const { propertySchema, evaluationSchema } = require('../joiSchemas.js')
 const catchAsync = require('../utils/catchAsync');
-const ExpressError = require('../utils/ExpressError');
-const { isLoggedIn } = require('../middleware')
-
+const { isLoggedIn, isAuthor, isEvalAuthor, validateProperty, validateEvaluation } = require('../middleware')
 
 //Calculation Function Imports
 const calculateMonthlyPayment = require('../public/scripts/calculateMonthly.js');
@@ -22,28 +19,6 @@ const calculateRemainingLoan = require('../public/scripts/calculateRemainingLoan
 const Property = require('../models/property');
 const Evaluation = require('../models/evaluation');
 const property = require('../models/property');
-
-//Validation Middleware
-const validateProperty = (req, res, next) => {
-    const { error } = propertySchema.validate(req.body);
-
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',');
-        throw new ExpressError(msg, 400)
-    } else {
-        next();
-    }
-};
-
-const validateEvaluation = (req, res, next) => {
-    const { error } = evaluationSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',');
-        throw new ExpressError(msg, 400)
-    } else {
-        next();
-    }
-};
 
 router.get('/', catchAsync(async (req, res) => {
     const properties = await Property.find({});
@@ -84,35 +59,27 @@ router.get('/:id', catchAsync(async (req, res) => {
 
 }));
 
-router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
     const { id } = req.params;
     const property = await Property.findById(id);
     if (!property) {
         req.flash('error', 'Cant find that property');
         return res.redirect('/properties')
     }
-    if (!property.author.equals(req.user._id)) {
-        req.flash('error', 'You do not have permission to do that')
-        return res.redirect(`/properties/${id}`)
-    }
     const title = 'Edit'
     res.render('properties/edit', { property, title });
 
 }));
 
-router.put('/:id', isLoggedIn, validateProperty, catchAsync(async (req, res) => {
+router.put('/:id', isLoggedIn, isAuthor, validateProperty, catchAsync(async (req, res) => {
     const { id } = req.params;
     const property = await Property.findById(id);
-    if (!property.author.equals(req.user._id)) {
-        req.flash('error', 'You do not have permission to do that')
-        return res.redirect(`/properties/${id}`)
-    }
     const property1 = await Property.findByIdAndUpdate(id, { ...req.body.property });
     req.flash('success', 'Successfully Updated Property')
     res.redirect(`/properties/${property._id}`);
 }));
 
-router.delete('/:id', isLoggedIn, catchAsync(async (req, res) => {
+router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
     const { id } = req.params;
     const property = await Property.findById(id);
     if (!property.author.equals(req.user._id)) {
@@ -163,6 +130,18 @@ router.post('/:id/evaluations', isLoggedIn, validateEvaluation, catchAsync(async
     await evaluation.save();
     req.flash('success', 'Successfully Made Evaluation')
     res.redirect(`/evaluations/${evaluation._id}`);
+}));
+
+router.delete('/evaluations/:id', isLoggedIn, isEvalAuthor, catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const evaluation = await Evaluation.findById(id);
+    if (!evaluation.author.equals(req.user._id)) {
+        req.flash('error', 'You do not have permission to do that')
+        return res.redirect(`/evaluations/`)
+    }
+    await evaluation.findByIdAndDelete(id);
+    req.flash('success', 'Successfully Deleted Evaluation');
+    res.redirect('/evaluations');
 }));
 
 module.exports = router;

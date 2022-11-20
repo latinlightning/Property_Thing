@@ -17,7 +17,8 @@
             <p class="fs-5">Square Feet: <%= evaluation.property.sqFt %> Year Built:
                 <%= evaluation.property.yearBuilt %></p>
             <div>
-                <a class="card-link btn btn-info" href="/properties/<%= evaluation.property._id %>/edit">Edit</a>
+                <a class="card-link btn btn-info" href="/properties/<%= evaluation.property._id %>/edit">Edit
+                    Property</a>
                 <form class="d-inline" action="/properties/<%= evaluation.property._id %>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete</button>
                 </form>
@@ -40,8 +41,19 @@
                     </div>
                 </div>
             </div>
-            <a class="card-link btn btn-info" href="/properties/<%= evaluation.property._id %>/evaluations/new">New
-                Eval</a>
+            <div>
+                <a class="card-link btn btn-info mb-2"
+                    href="/properties/<%= evaluation.property._id %>/evaluations/new">New
+                    Eval</a>
+                <% if (currentUser && evaluation.author.equals(currentUser)) {%>
+                <div>
+                    <form class="d-inline" action="/evaluations/<%= evaluation._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+                <% } %>
+            </div>
+
         </div>
     </div>
 </div>

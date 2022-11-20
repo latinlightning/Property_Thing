@@ -42,12 +42,15 @@
                         <h6 class="card-subtitle mb-2 text-muted">Cash Flow:
                             $<%= parseFloat(evaluation.cashFlow).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %>
                         </h6>
+
                         <a href="/evaluations/<%= evaluation._id %>" class="card-link">More Details</a>
                     </div>
                 </div>
                 <% } %>
             </div>
+            <% if (currentUser) {%>
             <a class="card-link btn btn-info mt-2" href="/properties/<%= property._id %>/evaluations/new">New Eval</a>
+            <% } %>
         </div>
     </div>
 </div>

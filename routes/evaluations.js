@@ -9,15 +9,8 @@ const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 const { evaluationSchema } = require('../joiSchemas.js')
 
-const validateEvaluation = (req, res, next) => {
-    const { error } = evaluationSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',');
-        throw new ExpressError(msg, 400)
-    } else {
-        next();
-    }
-};
+const { isLoggedIn, isEvalAuthor, validateProperty, validateEvaluation } = require('../middleware')
+
 
 router.get('/', catchAsync(async (req, res) => {
     const evaluations = await Evaluation.find({}).populate('property');
@@ -29,6 +22,18 @@ router.get('/:id', catchAsync(async (req, res) => {
     const evaluation = await Evaluation.findById(req.params.id).populate('property').populate('author');
     const title = `Evaluation for ${evaluation.property.address}`;
     res.render('evaluations/show', { evaluation, title });
+}));
+
+router.delete('/:id', isLoggedIn, isEvalAuthor, catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const evaluation = await Evaluation.findById(id);
+    if (!evaluation.author.equals(req.user._id)) {
+        req.flash('error', 'You do not have permission to do that')
+        return res.redirect(`/evaluations/}`)
+    }
+    await Evaluation.findByIdAndDelete(id);
+    req.flash('success', 'Successfully Deleted Evaluation');
+    res.redirect('/evaluations');
 }));
 
 module.exports = router; 
