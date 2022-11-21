@@ -15,10 +15,12 @@ const PropertySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    image: {
-        type: String,
-        default: 'https://res.cloudinary.com/davatxx2f/image/upload/v1659678902/PropertyThing/quack_ih1amy.jpg'
-    },
+    images: [
+        {
+            url: String,
+            fileName: String
+        }
+    ],
     evaluations: [
         {
             type: Schema.Types.ObjectId,

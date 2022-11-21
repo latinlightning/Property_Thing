@@ -3,7 +3,7 @@
 <div class="row">
     <h1 class="text-center mt-5">Add Property</h1>
     <div class="col-6 offset-3">
-        <form action="/properties" method="POST" novalidate class="validated-form">
+        <form action="/properties" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="address">Address</label>
                 <input class="form-control" type="text" name="property[address]" id="address" required>
@@ -96,10 +96,11 @@
                 <label class="form-label" for="yearBuilt">Year Built</label>
                 <input class="form-control" type="number" name="property[yearBuilt]" id="yearBuilt" required>
             </div>
-            <div class="mb-3">
+            <input type="file" name="image" multiple>
+            <!--             <div class="mb-3">
                 <label class="form-label" for="image">Image URL</label>
                 <input class="form-control" type="text" name="property[image]" id="image">
-            </div>
+            </div> -->
             <button type="submit" class="btn btn-primary mt-2">Submit</button>
         </form>
     </div>

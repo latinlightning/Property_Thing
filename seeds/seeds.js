@@ -11,7 +11,7 @@ db.once('open', () => {
 
 const seedProperties = [
     {
-        author: '631a48c17a6f53114748613b',
+        author: '637a9688d3b4c856fd40e087',
         address: '808 Comet Dr Apt 203',
         city: 'Foster City',
         state: 'CA',
@@ -24,7 +24,7 @@ const seedProperties = [
         image: 'https://res.cloudinary.com/davatxx2f/image/upload/v1659676359/PropertyThing/kulakai_rundoh.webp'
     },
     {
-        author: '631a48c17a6f53114748613b',
+        author: '637a9688d3b4c856fd40e087',
         address: '505 Seagate Way',
         city: 'Belmont',
         state: 'CA',
@@ -37,7 +37,7 @@ const seedProperties = [
         image: 'https://res.cloudinary.com/davatxx2f/image/upload/v1659676323/PropertyThing/seagate_vsbpme.webp'
     },
     {
-        author: '631a48c17a6f53114748613b',
+        author: '637a9688d3b4c856fd40e087',
         address: '5255 Quay Court',
         city: 'Arvada',
         state: 'CO',
@@ -51,7 +51,7 @@ const seedProperties = [
 
     },
     {
-        author: '631a48c17a6f53114748613b',
+        author: '637a9688d3b4c856fd40e087',
         address: '8500 Lamar Dr',
         city: 'Arvada',
         state: 'CO',

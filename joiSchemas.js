@@ -11,7 +11,6 @@ module.exports.propertySchema = Joi.object({
         baths: Joi.number().required(),
         sqFt: Joi.number().required().min(0),
         yearBuilt: Joi.number().required().min(0),
-        image: Joi.string().required()
     }).required()
 });
 

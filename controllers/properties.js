@@ -25,8 +25,10 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.createProperty = async (req, res) => {
     const newProperty = new Property(req.body.property);
+    newProperty.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     newProperty.author = req.user._id;
     await newProperty.save();
+    console.log(newProperty)
     req.flash('success', 'Successfully Made Property')
     res.redirect(`/properties/${newProperty._id}`);
 };
