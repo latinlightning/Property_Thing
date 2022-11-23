@@ -14,15 +14,26 @@
                 </div>
             </div>
             <div class="col-md-5">
-                <% if(!property.image)  {%>
+                <% if(property.images.length === 0)  {%>
                 <a href="/properties/<%= property._id%>"><img
                         src="https://res.cloudinary.com/davatxx2f/image/upload/v1659678902/PropertyThing/quack_ih1amy.jpg"
                         class="img-fluid rounded-start" alt="Image of <%= property.address %>"> </a>
                 <% } else {%>
-                <a href="/properties/<%= property._id%>"><img src="<%= property.image %>"
+                <a href="/properties/<%= property._id%>"><img src="<%= property.images[0].url %>"
                         class="img-thumbnail rounded-start" alt="Image of <%= property.address %> "> </a>
                 <% } %>
             </div>
+            <!--             <div>
+                <% if (property.images.length === 0) {%>
+                <a href="/properties/<%= property._id%>"><img
+                        src="https://res.cloudinary.com/davatxx2f/image/upload/v1659678902/PropertyThing/quack_ih1amy.jpg"
+                        alt="" class="img-fluid"></a>
+                <% } else {%>
+                <% for(let img of property.images) {%>
+                <a href="/properties/<%= property._id%>"><img class="img-fluid" src="<%= img.url %>" alt="..."></a>
+                <% } %>
+                <% } %>
+            </div> -->
         </div>
     </div>
 </div>
