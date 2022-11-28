@@ -1,14 +1,25 @@
 <% layout('layouts/boilerplate') %>
 
 <div class="col-12 mt-5 text-center">
-    <% if (property.images.length === 0) {%>
-    <img src="https://res.cloudinary.com/davatxx2f/image/upload/v1659678902/PropertyThing/quack_ih1amy.jpg" alt=""
-        class="img-fluid">
-    <% } else {%>
-    <% for(let img of property.images) {%>
-    <img class="img-fluid" src="<%= img.url %>" alt="...">
-    <% } %>
-    <% } %>
+    <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <% property.images.forEach((img, i) =>  { %>
+            <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+                <img src="<%= img.url %>" class="img-fluid" alt="">
+            </div>
+            <% }) %>
+        </div>
+        <% if (property.images.length > 1) {%>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+        <% } %>
+    </div>
 </div>
 
 <div class="container text-center">

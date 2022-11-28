@@ -21,7 +21,17 @@ const seedProperties = [
         baths: 2,
         sqFt: 850,
         yearBuilt: 1986,
-        image: 'https://res.cloudinary.com/davatxx2f/image/upload/v1659676359/PropertyThing/kulakai_rundoh.webp'
+        images: [
+            {
+                url: 'https://res.cloudinary.com/davatxx2f/image/upload/v1669678817/PropertyThing/ctiuc2xk1lih7ycnmlbz.jpg'
+            },
+            {
+                url: 'https://res.cloudinary.com/davatxx2f/image/upload/v1669678817/PropertyThing/j9xjaoflrw5s0hfjxmgs.jpg',
+            },
+            {
+                url: 'https://res.cloudinary.com/davatxx2f/image/upload/v1669678817/PropertyThing/anoskoqcb2xpivxggabq.jpg',
+            }
+        ]
     },
     {
         author: '637a9688d3b4c856fd40e087',
@@ -34,7 +44,17 @@ const seedProperties = [
         baths: 2,
         sqFt: 1600,
         yearBuilt: 1985,
-        image: 'https://res.cloudinary.com/davatxx2f/image/upload/v1659676323/PropertyThing/seagate_vsbpme.webp'
+        images: [
+            {
+                url: 'https://res.cloudinary.com/davatxx2f/image/upload/v1669678817/PropertyThing/ctiuc2xk1lih7ycnmlbz.jpg'
+            },
+            {
+                url: 'https://res.cloudinary.com/davatxx2f/image/upload/v1669678817/PropertyThing/j9xjaoflrw5s0hfjxmgs.jpg',
+            },
+            {
+                url: 'https://res.cloudinary.com/davatxx2f/image/upload/v1669678817/PropertyThing/anoskoqcb2xpivxggabq.jpg',
+            }
+        ]
     },
     {
         author: '637a9688d3b4c856fd40e087',
@@ -47,7 +67,17 @@ const seedProperties = [
         baths: 1,
         sqFt: 850,
         yearBuilt: 1960,
-        image: 'https://res.cloudinary.com/davatxx2f/image/upload/v1659676319/PropertyThing/quay_kaskup.webp'
+        images: [
+            {
+                url: 'https://res.cloudinary.com/davatxx2f/image/upload/v1669678817/PropertyThing/ctiuc2xk1lih7ycnmlbz.jpg'
+            },
+            {
+                url: 'https://res.cloudinary.com/davatxx2f/image/upload/v1669678817/PropertyThing/j9xjaoflrw5s0hfjxmgs.jpg',
+            },
+            {
+                url: 'https://res.cloudinary.com/davatxx2f/image/upload/v1669678817/PropertyThing/anoskoqcb2xpivxggabq.jpg',
+            }
+        ]
 
     },
     {
@@ -61,7 +91,17 @@ const seedProperties = [
         baths: 2,
         sqFt: 1800,
         yearBuilt: 1970,
-        image: 'https://res.cloudinary.com/davatxx2f/image/upload/v1659676685/PropertyThing/lamar_sgyojt.webp'
+        images: [
+            {
+                url: 'https://res.cloudinary.com/davatxx2f/image/upload/v1669678817/PropertyThing/ctiuc2xk1lih7ycnmlbz.jpg'
+            },
+            {
+                url: 'https://res.cloudinary.com/davatxx2f/image/upload/v1669678817/PropertyThing/j9xjaoflrw5s0hfjxmgs.jpg',
+            },
+            {
+                url: 'https://res.cloudinary.com/davatxx2f/image/upload/v1669678817/PropertyThing/anoskoqcb2xpivxggabq.jpg',
+            }
+        ]
     },
 ]
 
