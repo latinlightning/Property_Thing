@@ -13,6 +13,7 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+const mongoSanitize = require('express-mongo-sanitize');
 
 //Error and Validation Imports
 const ExpressError = require('./utils/ExpressError');
@@ -22,8 +23,13 @@ const userRoutes = require('./routes/users');
 const propertyRoutes = require('./routes/properties');
 const evaluationRoutes = require('./routes/evaluations');
 
+const MongoStore = require("connect-mongo");
+
+const dbUrl = 'mongodb://localhost:27017/property_thing'
+
 //Database Connection
-mongoose.connect('mongodb://localhost:27017/property_thing')
+mongoose.connect(dbUrl)
+//mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -40,9 +46,23 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static('public'));
+app.use(mongoSanitize());
+
+const store = new MongoStore({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: '123456'
+    }
+});
+
+store.on('error', function (e) {
+    console.log("Session Store Error", e)
+})
 
 const sessionConfig = {
-    secret: 'secret',
+    store,
+    secret: '123456',
     resave: false,
     saveUninitialized: true,
     cookie: {

@@ -1,10 +1,33 @@
-const Joi = require('joi');
+const BaseJoi = require('joi');
+const sanitizeHtml = require('sanitize-html');
+
+const extension = (joi) => ({
+    type: 'string',
+    base: joi.string(),
+    messages: {
+        'string.escapeHTML': '{{#label}} must not include HTML!'
+    },
+    rules: {
+        escapeHTML: {
+            validate(value, helpers) {
+                const clean = sanitizeHtml(value, {
+                    allowedTags: [],
+                    allowedAttributes: {},
+                });
+                if (clean !== value) return helpers.error('string.escapeHTML', { value })
+                return clean;
+            }
+        }
+    }
+});
+
+const Joi = BaseJoi.extend(extension);
 
 module.exports.propertySchema = Joi.object({
     property: Joi.object({
-        address: Joi.string().required(),
-        city: Joi.string().required(),
-        state: Joi.string().required(),
+        address: Joi.string().required().escapeHTML(),
+        city: Joi.string().required().escapeHTML(),
+        state: Joi.string().required().escapeHTML(),
         zip: Joi.number().required().min(0),
         type: Joi.string().required(),
         beds: Joi.number().required(),
