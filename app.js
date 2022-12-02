@@ -14,6 +14,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const mongoSanitize = require('express-mongo-sanitize');
+const secret = process.env.SECRET || 'secret'
 
 //Error and Validation Imports
 const ExpressError = require('./utils/ExpressError');
@@ -25,7 +26,7 @@ const evaluationRoutes = require('./routes/evaluations');
 
 const MongoStore = require("connect-mongo");
 
-const dbUrl = 'mongodb://localhost:27017/property_thing'
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/property_thing';
 
 //Database Connection
 mongoose.connect(dbUrl)
@@ -52,7 +53,7 @@ const store = new MongoStore({
     mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
-        secret: '123456'
+        secret: secret
     }
 });
 
@@ -62,7 +63,7 @@ store.on('error', function (e) {
 
 const sessionConfig = {
     store,
-    secret: '123456',
+    secret: secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
